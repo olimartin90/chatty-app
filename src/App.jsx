@@ -24,6 +24,16 @@ class App extends Component {
   }
 
   componentDidMount() {
+
+    this.socket = new WebSocket("ws://localhost:3001/websocket");
+    
+    this.socket.addEventListener("open", e => {
+      console.log("Connected to websocket server");
+    });
+
+    this.socket.addEventListener("message", this.receiveMessage);
+  
+
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
