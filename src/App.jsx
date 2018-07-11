@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
+// Class App
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Oli"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     };
     this.socket = new WebSocket("ws://localhost:3001/websocket");
   }
 
+  // Socket connection to server and Set time out to simulate an incoming message
   componentDidMount() {
     
     this.socket.addEventListener("open", e => {
@@ -33,16 +35,18 @@ class App extends Component {
     }, 3000);
   }
 
+  // Receive message function and concatenate to messages array
   receiveMessage = e => {
     const newMessage = JSON.parse(e.data)
     const messages = this.state.messages.concat(newMessage)
     this.setState({messages: messages})
   };
   
+  // Send a new message function through the web socket
   handleNewMessage = e => {
     if (e.key == "Enter") {
       const newMessage = {
-        username: this.state.currentUser.name, 
+        username: this.state.currentUser, 
         content: e.target.value,
         type: "message"
       };
@@ -51,6 +55,15 @@ class App extends Component {
     }
   };
 
+  // Change user function
+  changeUser = e => {
+    if (e.key == "Enter") {
+      const userName = e.target.value
+      this.setState({currentUser: userName})
+    }
+  };
+
+  // Render function to render messages and current user
   render() {
     return (
       <div>
@@ -58,7 +71,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messageList={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} handleNewMessage={this.handleNewMessage} />
+        <ChatBar currentUser={this.state.currentUser} handleNewMessage={this.handleNewMessage} changeUser={this.changeUser} />
       </div>
     );
   }
