@@ -28,31 +28,44 @@ wss.broadcast = (data) => {
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+const userOnline = {
+  type: "incomingUserOnline",
+  count: 0
+};
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  userOnline.count ++;
+  // console.log(userOnline);
+  wss.broadcast(JSON.stringify(userOnline));
 
   ws.on("message", data => {
 
     const msg = JSON.parse(data);
     switch (msg.type) {
         case "postMessage":
-            msg.id = uuidv4();
-            msg.type = "incomingMessage";
-            // console.log(`User ${msg.username} said ${msg.content}`);
-            
-            wss.broadcast(JSON.stringify(msg));
-            break;
+          msg.id = uuidv4();
+          msg.type = "incomingMessage";
+          // console.log(`User ${msg.username} said ${msg.content}`);
+          
+          wss.broadcast(JSON.stringify(msg));
+          break;
         case "postNotification":
-            msg.id = uuidv4();
-            msg.type = "incomingNotification";
-            // console.log(`**UserA** changed their name to **UserB**`)
+          msg.id = uuidv4();
+          msg.type = "incomingNotification";
+          // console.log(`**UserA** changed their name to **UserB**`)
 
-            wss.broadcast(JSON.stringify(msg));
-            break;
-            default:
+          wss.broadcast(JSON.stringify(msg));
+          break;
+        default:
     }
   })
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected');
+    userOnline.count --;
+    // console.log(userOnline);
+    wss.broadcast(JSON.stringify(userOnline));
+  })
 });

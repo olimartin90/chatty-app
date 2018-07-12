@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      countUser: 0
     };
     this.socket = new WebSocket("ws://localhost:3001/websocket");
   }
@@ -31,6 +32,9 @@ class App extends Component {
           break;
         case "incomingNotification":
           this.receiveMessage(data);
+          break;
+        case "incomingUserOnline":
+          this.setState({countUser: data.count});
           break;
         default:
           throw new Error(`Unknown event type ${data.type}`);
@@ -89,6 +93,7 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar">
+          <span className="count-user-online">{this.state.countUser} users online</span>
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messageList={this.state.messages} />
