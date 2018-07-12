@@ -36,7 +36,7 @@ const userOnline = {
 wss.on('connection', (ws) => {
   console.log('Client connected');
   userOnline.count ++;
-  // console.log(userOnline);
+  
   wss.broadcast(JSON.stringify(userOnline));
 
   ws.on("message", data => {
@@ -46,14 +46,12 @@ wss.on('connection', (ws) => {
         case "postMessage":
           msg.id = uuidv4();
           msg.type = "incomingMessage";
-          // console.log(`User ${msg.username} said ${msg.content}`);
           
           wss.broadcast(JSON.stringify(msg));
           break;
         case "postNotification":
           msg.id = uuidv4();
           msg.type = "incomingNotification";
-          // console.log(`**UserA** changed their name to **UserB**`)
 
           wss.broadcast(JSON.stringify(msg));
           break;
