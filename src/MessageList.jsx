@@ -4,15 +4,21 @@ import Message from './Message.jsx';
 class MessageList extends Component {
     
   render() {
-    const messages = this.props.messageList.map ((message, index) => {
-        return <Message message={message} key={index} />
+    const messages = this.props.messageList.map ((message) => {
+        if (message.type === "incomingMessage") {
+            return <Message message={message} key={message.id} />
+        } else if (message.type === "incomingNotification") {
+            return (
+                <div className="message system" key={message.id} >
+                    {message.content}
+                </div>
+            );
+        }
     });
 
     return (
         <main className="messages">
             {messages}
-            <div className="message system">
-            </div>
         </main>
     )
   }
