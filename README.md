@@ -74,5 +74,9 @@ npm run lint
 
 ## App in action
 
-<!-- #### Main page
-!["screenshot-main-page-menu.png"](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-main-page-menu.png?raw=true) -->
+#### Chat page
+!["Screenshot 2018-07-15 15.12.05.png"](https://github.com/olimartin90/chatty-app/blob/master/docs/Screenshot%202018-07-15%2015.12.05.png?raw=true)
+
+#### Chatting and Changing Users
+!["Screenshot 2018-07-15 15.26.00.png"](https://github.com/olimartin90/chatty-app/blob/master/docs/Screenshot%202018-07-15%2015.26.00.png?raw=true)
+
