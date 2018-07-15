@@ -1,3 +1,13 @@
+# Chatty App
+
+## About the project
+
+One page app where users can chat live and notify when a new user is online. The number of online user is also displayed and updated everytime a new user is connected.
+
+### Project setup
+
+The project is running under the configuration of Webpack, Babel and the library React. Two servers are set up for running the app by using web server socket and webpack dev server.
+
 React Boilerplate
 =====================
 
@@ -23,6 +33,15 @@ npm start
 open http://localhost:3000
 ```
 
+Install the dependencies for web server socket and start the server.
+
+```
+npm install --save --save-exact express
+npm install --save --save-exact ws
+npm install -g nodemon
+nodemon -L <server.js>
+```
+
 ### Static Files
 
 You can store static files like images, fonts, etc in the `build` folder.
@@ -39,7 +58,21 @@ npm run lint
 
 ### Dependencies
 
-* React
+* [Babel-loader](https://github.com/babel/babel-loader)
+* Babel-core
+* Babel-preset-es2015
+* Babel-preset-react
+* Css-loader
+* Node-sass
+* Sass-loader
+* Sockjs-client
+* Style-loader
 * Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* [Webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* React
+* React-dom
+
+## App in action
+
+<!-- #### Main page
+!["screenshot-main-page-menu.png"](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-main-page-menu.png?raw=true) -->
