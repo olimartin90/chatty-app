@@ -71,6 +71,9 @@ npm run lint
 * [Webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 * React
 * React-dom
+* Express
+* ws
+* uuid
 
 ## App in action
 
