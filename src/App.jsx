@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
-// Class App
 class App extends Component {
 
   constructor(props) {
@@ -18,12 +17,13 @@ class App extends Component {
   // Socket connection to server and Set time out to simulate an incoming message
   componentDidMount() {
     
+    console.log("componentDidMount <App />");
+
     this.socket.onopen = event => {
       console.log("Connected to websocket server");
     };
 
     this.socket.onmessage = event => {
-      // console.log(`event-- ${event.data}`)
 
       const data = JSON.parse(event.data);
       switch (data.type) {
@@ -40,18 +40,6 @@ class App extends Component {
           throw new Error(`Unknown event type ${data.type}`);
       }
     };
-  
-    console.log("componentDidMount <App />");
-
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-    //   // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
-    //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
-    //   this.setState({messages: messages})
-    // }, 2000);
   }
 
   // Receive message function and concatenate to messages array
@@ -62,7 +50,7 @@ class App extends Component {
   
   // Send a new message function through the web socket
   handleNewMessage = event => {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       const newMessage = {
         type: "postMessage",
         username: this.state.currentUser, 
@@ -76,14 +64,13 @@ class App extends Component {
   // Change user function and send incoming notification
   changeUser = event => {
     const newUsername = event.target.value;
-    console.log(newUsername)
     const oldUsername = this.state.currentUser;
     if (event.key == "Enter") {
       this.setState({currentUser: newUsername});
-        const message = {
-          type: "postNotification",
-          content: `${oldUsername} has change their name to ${newUsername}` 
-        };
+      const message = {
+        type: "postNotification",
+        content: `${oldUsername} has change their name to ${newUsername}` 
+      };
       this.socket.send(JSON.stringify(message));
     }
   };
